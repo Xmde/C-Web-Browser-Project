@@ -3,6 +3,9 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
+#QMAKE_CXXFLAGS += -lwsock32 -lws2_32
+#QMAKE_LFLAGS += -lwsock32 -lws2_32
+LIBS += -lwsock32 -lws2_32
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.

@@ -26,9 +26,10 @@ MainWindow::~MainWindow()
 void MainWindow::on_load_clicked()
 {
     // HTTP
-    httplib::Client cli(url->text().toUtf8());
+    //httplib::Client cli(url->text().toUtf8());
 
-    auto res = cli.Get("/index.html");
+    httplib::Client cli("http://inventobot.com");
+    auto res = cli.Get("/");
     site->append(QString::fromStdString(res->body));
 
     log->appendHtml(QString::fromStdString(res->body));
