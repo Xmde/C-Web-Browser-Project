@@ -1,8 +1,8 @@
+#define CPPHTTPLIB_OPENSSL_SUPPORT
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "httplib.h"
-
-#define CPPHTTPLIB_OPENSSL_SUPPORT
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,10 +25,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_load_clicked()
 {
-    // HTTP
+    // HTTPS
     //httplib::Client cli(url->text().toUtf8());
 
-    httplib::Client cli("http://inventobot.com");
+    httplib::Client cli("https://inventobot.com");
+
     auto res = cli.Get("/");
     site->append(QString::fromStdString(res->body));
 
