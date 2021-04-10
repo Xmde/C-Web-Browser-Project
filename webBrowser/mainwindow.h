@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QString>
+#include <windows.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

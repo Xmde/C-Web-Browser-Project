@@ -14,11 +14,11 @@ LIBS += -LL"$$_PRO_FILE_PWD_/../libraries" -lssl -lcrypto
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
 
 HEADERS += \
     httplib.h \
-    mainwindow.h
+    mainwindow.h \
 
 FORMS += \
     mainwindow.ui
@@ -31,3 +31,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     ca-bundle.crt \
     webBrowser.pro.user
+
+SUBDIRS += \

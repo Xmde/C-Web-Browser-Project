@@ -3,6 +3,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "httplib.h"
+#include "QDebug"
+
+#define CPPHTTPLIB_OPENSSL_SUPPORT
+#define WIN32_LEAN_AND_MEAN
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,11 +29,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_load_clicked()
 {
-    // HTTPS
-    //httplib::Client cli(url->text().toUtf8());
+    // HTTP
+    const char *urlString = "https://google.com";//url->text().toUtf8();
+    qDebug() << urlString;
 
-    httplib::Client cli("https://inventobot.com");
+    httplib::Client cli(urlString);
 
+
+    // Use your CA bundle
+    cli.set_ca_cert_path("./ca-bundle.crt");
+
+    // Disable cert verification
+    cli.enable_server_certificate_verification(false);
+
+    //httplib::Client cli("http://inventobot.com");
     auto res = cli.Get("/");
     site->append(QString::fromStdString(res->body));
 

@@ -8,6 +8,10 @@
 #ifndef CPPHTTPLIB_HTTPLIB_H
 #define CPPHTTPLIB_HTTPLIB_H
 
+//JUST WORK PLEASE
+#define CPPHTTPLIB_OPENSSL_SUPPORT
+#define WIN32_LEAN_AND_MEAN
+
 /*
  * Configuration
  */
