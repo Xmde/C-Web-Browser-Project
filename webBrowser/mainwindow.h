@@ -9,7 +9,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QString>
-#include <windows.h>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,10 +22,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
-    QLineEdit* url;
-    QPlainTextEdit* log;
-    QTextEdit* site;
 
 private slots:
     void on_load_clicked();

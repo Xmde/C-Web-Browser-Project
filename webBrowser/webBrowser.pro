@@ -2,11 +2,11 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++99
 #QMAKE_CXXFLAGS += -lwsock32 -lws2_32
 #QMAKE_LFLAGS += -lwsock32 -lws2_32
-#LIBS += -lwsock32 -lws2_32
-LIBS += -LL"$$_PRO_FILE_PWD_/../libraries" -lssl -lcrypto
+LIBS += -lwsock32 -lws2_32
+#LIBS += -L$$PWD/openssl-OpenSSL_1_1_1k/ -libssl -libcrypto
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -33,3 +33,15 @@ DISTFILES += \
     webBrowser.pro.user
 
 SUBDIRS += \
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/openssl/ -lcrypto
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/openssl/ -lssl
+
+INCLUDEPATH += $$PWD/openssl/include
+DEPENDPATH += $$PWD/openssl/include
+
+#windows is hell
+win32: LIBS += -lWldap32
+win32: LIBS += -lCrypt32
+win32: LIBS += -lWs2_32

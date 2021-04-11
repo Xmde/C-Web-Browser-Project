@@ -15,8 +15,8 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
@@ -28,15 +28,16 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout_2;
     QVBoxLayout *controls;
     QLineEdit *url;
     QHBoxLayout *horizontalLayout;
     QPushButton *back;
     QPushButton *load;
-    QTextEdit *site;
-    QPlainTextEdit *log;
+    QScrollArea *page;
+    QWidget *scrollAreaWidgetContents;
+    QTextEdit *log;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -47,27 +48,27 @@ public:
         MainWindow->resize(800, 600);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        widget = new QWidget(centralwidget);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(0, 10, 791, 541));
-        verticalLayout_2 = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(centralwidget);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(0, 10, 791, 541));
+        verticalLayout_2 = new QVBoxLayout(layoutWidget);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
         controls = new QVBoxLayout();
         controls->setObjectName(QString::fromUtf8("controls"));
-        url = new QLineEdit(widget);
+        url = new QLineEdit(layoutWidget);
         url->setObjectName(QString::fromUtf8("url"));
 
         controls->addWidget(url);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        back = new QPushButton(widget);
+        back = new QPushButton(layoutWidget);
         back->setObjectName(QString::fromUtf8("back"));
 
         horizontalLayout->addWidget(back);
 
-        load = new QPushButton(widget);
+        load = new QPushButton(layoutWidget);
         load->setObjectName(QString::fromUtf8("load"));
 
         horizontalLayout->addWidget(load);
@@ -78,12 +79,17 @@ public:
 
         verticalLayout_2->addLayout(controls);
 
-        site = new QTextEdit(widget);
-        site->setObjectName(QString::fromUtf8("site"));
+        page = new QScrollArea(layoutWidget);
+        page->setObjectName(QString::fromUtf8("page"));
+        page->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 787, 235));
+        page->setWidget(scrollAreaWidgetContents);
 
-        verticalLayout_2->addWidget(site);
+        verticalLayout_2->addWidget(page);
 
-        log = new QPlainTextEdit(widget);
+        log = new QTextEdit(layoutWidget);
         log->setObjectName(QString::fromUtf8("log"));
 
         verticalLayout_2->addWidget(log);
