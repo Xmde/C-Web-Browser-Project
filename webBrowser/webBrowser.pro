@@ -5,18 +5,21 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++99
 #QMAKE_CXXFLAGS += -lwsock32 -lws2_32
 #QMAKE_LFLAGS += -lwsock32 -lws2_32
-LIBS += -lwsock32 -lws2_32
-#LIBS += -L$$PWD/openssl-OpenSSL_1_1_1k/ -libssl -libcrypto
+#LIBS += -lwsock32 -lws2_32
+LIBS += -LL"$$_PRO_FILE_PWD_/../libraries" -lssl -lcrypto
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    htmldata.cpp \
     main.cpp \
     mainwindow.cpp \
 
 HEADERS += \
+    Parser.h \
+    htmldata.h \
     httplib.h \
     mainwindow.h \
 
