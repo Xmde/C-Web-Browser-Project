@@ -9,7 +9,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QString>
-
+#include <renderer.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,11 +22,16 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void loadPage(QString url);
+    static MainWindow getself();
 
 private slots:
     void on_load_clicked();
 
 private:
     Ui::MainWindow *ui;
+    renderer* renderobj;
+
+
 };
 #endif // MAINWINDOW_H
