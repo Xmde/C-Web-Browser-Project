@@ -10,27 +10,35 @@
 #include <QHBoxLayout>
 #include <QString>
 #include <renderer.h>
+#include <QVector>
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class MainProgramWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    MainProgramWindow(QWidget *parent = nullptr);
+    ~MainProgramWindow();
     void loadPage(QString url);
-    static MainWindow getself();
+    void loadLink(QString url);
+    void ConnectButtonToLink(QPushButton* b, QString url);
 
 private slots:
     void on_load_clicked();
 
+    void on_back_clicked();
+
 private:
     Ui::MainWindow *ui;
-    renderer* renderobj;
+    //i dont understand c++ en
+    class renderer* renderobj;
+    QVector<QString>* urls;
+    int backPresses;
 
 
 };

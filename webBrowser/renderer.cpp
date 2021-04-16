@@ -8,6 +8,7 @@
 #include <QWidget>
 #include <QFrame>
 #include <QDebug>
+#include <QSpacerItem>
 
 bool pageRendered;
 
@@ -16,30 +17,51 @@ renderer::renderer()
     pageRendered = false;
 }
 
+void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist, class MainProgramWindow* window){
 
-void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist){
+    if(pageRendered){
+        //less memmory leaks?
+        for(QObject* x : displayArea->children().at(0)->children()){
+            delete x;
+        }
+    }
 
-    QFrame f = QFrame();
+    QFrame* frame = new QFrame();
 
-    QBoxLayout box = QBoxLayout(QBoxLayout::TopToBottom);
+    frame->setFrameStyle(QFrame::Box | QFrame::Plain);
+    frame->setLineWidth(2);
+    frame->setStyleSheet("QFrame {background-color:white;}");
+
+    QVBoxLayout* box = new QVBoxLayout();
+
+    box->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    box->setSpacing(3);
+
+//    box->minimumSize();
+
+//    box->setSizeConstraint(QLayout::SetMinimumSize);
 
     for(htmldata d : taglist){
         if(d.gettag() == htmldata::text){
             //leaky memmory time
-            QLabel l = QLabel(d.getcontents());
-            l.setWordWrap(true);
+            QLabel* l = new QLabel(d.getcontents());
+            l->setMinimumWidth(760);
+            l->setWordWrap(true);
             //set css data
-            box.addWidget(&l);
+            box->addWidget(l);
+            //box->addSpacerItem(new QSpacerItem(10, 2));
         }
         else if(d.gettag() == htmldata::link){
-            QPushButton b = QPushButton();
-            b.text().append(d.contents);
+            QPushButton* b = new QPushButton(d.getcontents());
+            b->setVisible(true);
+            //makes it look like a link
+            b->setStyleSheet("color:blue; border: none; text-align: left; text-decoration: underline;");
             //makes button load new page
             QString link = htmldata::getlinkfromdata(d.getdata());
-//            QObject::connect(&b, &QPushButton::clicked, [window, link](){
-//                window->loadPage(link);
-//            });
-            box.addWidget(&b);
+            //the leakyest memmory
+            window->ConnectButtonToLink(b, link);
+            box->addWidget(b);
+            //box->addSpacerItem(new QSpacerItem(10, 2));
         }
         else if(d.gettag() == htmldata::image){
             //figure this out
@@ -48,17 +70,23 @@ void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist){
             //do nothing
         }
         else{
-            qDebug() << "invalid tag type";
+            qDebug() << "WARNING: invalid tag type parsed";
         }
     }
 
-    f.setLayout(QVBoxLayout());
-    box.setParent(&f);
+    //qDebug() << box->children();
 
-    displayArea->setWidget(&f);
+    frame->setLayout(box);
+
+    //qDebug() <<frame->children();
+    frame->setMinimumWidth(760);
+
+    displayArea->setWidget(frame);
+    displayArea->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 
     displayArea->show();
 
-    qDebug() << "shown";
+    //qDebug() << "shown";
+
     pageRendered = true;
 }

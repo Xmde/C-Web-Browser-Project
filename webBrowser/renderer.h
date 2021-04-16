@@ -4,12 +4,13 @@
 #include <QScrollArea>
 #include <QVector>
 #include <htmldata.h>
+#include <mainwindow.h>
 
 class renderer
 {
 public:
     renderer();
-    void renderPage(QScrollArea* displayArea, QVector<htmldata> tags);
+    void renderPage(QScrollArea* displayArea, QVector<htmldata> tags, class MainProgramWindow* window);
 
 };
 
