@@ -57,7 +57,7 @@ void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist, c
             //makes it look like a link
             b->setStyleSheet("color:blue; border: none; text-align: left; text-decoration: underline;");
             //makes button load new page
-            QString link = htmldata::getlinkfromdata(d.getdata());
+            QString link = parser::getlinkfromdata(d.getdata());
             //the leakyest memmory
             window->ConnectButtonToLink(b, link);
             box->addWidget(b);

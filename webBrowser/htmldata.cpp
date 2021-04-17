@@ -19,19 +19,3 @@ QString htmldata::getcontents(){
 QString htmldata::getdata(){
     return data;
 }
-
-QString htmldata::getlinkfromdata(QString data){
-    return "todo";
-}
-
-QString htmldata::getcssfromdata(QString data){
-    return "todo";
-}
-
-QString htmldata::getsrcfromdata(QString data){
-    return "todo";
-}
-
-QString htmldata::getcssfortag(tags tag){
-    return "todo";
-}

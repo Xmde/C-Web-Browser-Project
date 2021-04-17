@@ -21,18 +21,9 @@ public:
     //gets the data in the tag <img [data]></img>
     QString getdata();
 
-
-    //some static functions to parse out css and src from tag data
-    //TOTO impliment
-    static QString getlinkfromdata(QString data);
-
-    static QString getsrcfromdata(QString data);
-
-    static QString getcssfromdata(QString data);
-
-    //a function to get the css data for a tag type
-
-    QString getcssfortag(tags tag);
+    operator QString() const {
+        return "type: " + QString::fromStdString(std::to_string(tag)) + " data: " + contents + " contence: " + data + "\n";
+    }
 };
 
 #endif // HTMLDATA_H

@@ -16,13 +16,14 @@ SOURCES += \
     htmldata.cpp \
     main.cpp \
     mainwindow.cpp \
+    parser.cpp \
     renderer.cpp
 
 HEADERS += \
-    Parser.h \
     htmldata.h \
     httplib.h \
     mainwindow.h \
+    parser.h \
     renderer.h
 
 FORMS += \

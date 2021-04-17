@@ -12,6 +12,7 @@
 #include <renderer.h>
 #include <QVector>
 #include <QPushButton>
+#include <parser.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
