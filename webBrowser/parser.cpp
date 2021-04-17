@@ -105,9 +105,11 @@ QVector<parser::tagData> parser::parseTags(QString html){
                 else{
                     if(inTagData && !tagOver){
                         tagData.last().append(c);
+                        qDebug() << "added ' ' to data";
                     }
                     else if(inTagContence && !tagOver){
                         tagContence.last().append(c);
+                        qDebug() << "added ' ' to contens";
                     }
                     else{
                         //do nothing
@@ -136,9 +138,11 @@ QVector<parser::tagData> parser::parseTags(QString html){
                 //adds the tag to the data or contense if not in type
                 else if(inTagData && !tagOver){
                     tagData.last().append(c);
+                    qDebug() << "added '/' to data";
                 }
                 else if(inTagContence && !tagOver){
                     tagContence.last().append(c);
+                    qDebug() << "added '/' to contens";
                 }
                 else{
                     //do nothing
@@ -160,7 +164,7 @@ QVector<parser::tagData> parser::parseTags(QString html){
                     //many sights dont close img tags
 
                     //adds the tag if it just read a closing tag
-                    if(tagOver || (currentTag.last() == "img")){
+                    if(tagOver || (currentTag.last() == "img") || (currentTag.last() == "hr") || (currentTag.last() == "br")){
                         //wrights the tag and its data to the tags list
                         qDebug() << "adding tag...";
                         struct tagData* tag = new struct tagData;
@@ -188,7 +192,7 @@ QVector<parser::tagData> parser::parseTags(QString html){
                         tags.append(*tag);
                         tagOver = false;
 
-                        qDebug() << "added tag of type: " + tag->tagtype;
+                        qDebug() << "added tag of type: " + tag->tagtype + " with data: " + tag->tagData + " and contens: " + tag->tagContence;
                     }
                     else{
                         qDebug() << "tag not added";
@@ -197,11 +201,13 @@ QVector<parser::tagData> parser::parseTags(QString html){
 
                 //if not a closing for a tag add it to the data or contense
                 else{
-                    if(inTagContence && !tagOver){
-                        tagContence.last().append(c);
-                    }
-                    else if(inTagData && !tagOver){
+                    if(inTagData && !tagOver){
                         tagData.last().append(c);
+                        qDebug() << "added '>' to data";
+                    }
+                    else if(inTagContence && !tagOver){
+                        tagContence.last().append(c);
+                        qDebug() << "added '>' to contens";
                     }
                     else{
                         //do nothing
@@ -214,12 +220,15 @@ QVector<parser::tagData> parser::parseTags(QString html){
             else{
                 if(inTagType && !tagOver){
                     currentTag.last().append(c);
-                }
-                else if(inTagContence && !tagOver){
-                    tagContence.last().append(c);
+                    qDebug() << "added " << c << " to type";
                 }
                 else if(inTagData && !tagOver){
                     tagData.last().append(c);
+                    qDebug() << "added " << c << " to data";
+                }
+                else if(inTagContence && !tagOver){
+                    tagContence.last().append(c);
+                    qDebug() << "added " << c << " to contens";
                 }
                 else{
                     //do nothing
@@ -231,12 +240,15 @@ QVector<parser::tagData> parser::parseTags(QString html){
         else{
             if(inTagType && !tagOver){
                 currentTag.last().append(c);
-            }
-            else if(inTagContence && !tagOver){
-                tagContence.last().append(c);
+                qDebug() << "added " << c << " to type while in quotes";
             }
             else if(inTagData && !tagOver){
                 tagData.last().append(c);
+                qDebug() << "added " << c << " to data while in quotes";
+            }
+            else if(inTagContence && !tagOver){
+                tagContence.last().append(c);
+                qDebug() << "added " << c << " to contens while in quotes";
             }
             else{
                 //do nothing
@@ -263,7 +275,7 @@ QVector<parser::tagData> parser::addCssToTagData(QVector<tagData> tags){
 QVector<htmldata> parser::makeTagsGeneric(QVector<parser::tagData> tags){
     qDebug() << "makign tags generic";
 
-    QVector<QString> textTags = {"p", "abbr", "adress", "b", "bdi", "bdo", "blockquote", "caption", "cite", "del", "em", "h1", "h2", "h3", "h4", "h5", "h6", "q", "rt", "s", "small", "span", "sub", "sup", "var"};
+    QVector<QString> textTags = {"p", "abbr", "address", "b", "bdi", "bdo", "blockquote", "caption", "cite", "del", "em", "h1", "h2", "h3", "h4", "h5", "h6", "q", "rt", "s", "small", "span", "sub", "sup", "var"};
     QVector<htmldata> genericTags;
 
     for(struct tagData t : tags){
