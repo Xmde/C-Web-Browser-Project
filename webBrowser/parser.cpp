@@ -497,3 +497,28 @@ QVector<htmldata> parser::parseHtml(QString html){
     qDebug() <<"done parsing";
 }
 
+//Gets the Correct Font Size when passed in data
+int parser::getFontSizeFromData(htmldata data, int defaultSize){
+    QString cssData;
+    QString output;
+    float fout;
+
+    int indexOfFontSize;
+    int indexOfFontSizeEnd;
+
+    cssData = getcssfromdata(data.data);
+
+    indexOfFontSize = cssData.indexOf("font-size:") + 11;
+    indexOfFontSizeEnd = cssData.indexOf("em", indexOfFontSize);
+
+    for(int i = indexOfFontSize; i < indexOfFontSizeEnd; i++){
+        output.append(cssData.at(i));
+    }
+
+    fout = output.toFloat() * defaultSize;
+
+    qDebug() << output;
+
+    return fout;
+}
+

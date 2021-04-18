@@ -59,6 +59,7 @@ void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist, c
             QLabel* l = new QLabel(d.getcontents());
             l->setMinimumWidth(760);
             l->setWordWrap(true);
+            l->setFont(QFont("Arial", parser::getFontSizeFromData(d, 15)));
             //set css data
             l->setStyleSheet(parser::getcssfromdata(d.getdata()));
             box->addWidget(l);
