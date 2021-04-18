@@ -20,19 +20,18 @@
 #include <QPixmap>
 #include <QThread>
 
-bool pageRendered;
+
 
 renderer::renderer()
 {
-    pageRendered = false;
-    renderer::readyToLoadNewImage = false;
-    renderer::imageLoaded = false;
+    renderer::pageRendered = false;
 }
 
 void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist, class MainProgramWindow* window, QString site){
 
-    if(pageRendered){
+    if(renderer::pageRendered){
         //less memmory leaks?
+        qDebug() << "sealing leaks";
         for(QObject* x : displayArea->children().at(0)->children()){
             delete x;
         }
@@ -116,7 +115,7 @@ void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist, c
 
     //qDebug() << "shown";
 
-    pageRendered = true;
+    renderer::pageRendered = true;
 }
 
 QByteArray renderer::getImage(QString urlBase, QString imgUrl){

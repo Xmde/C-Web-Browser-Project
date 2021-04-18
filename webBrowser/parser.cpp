@@ -1,4 +1,5 @@
 #include "parser.h"
+#include <QRegularExpression>
 
 parser::parser()
 {
@@ -123,6 +124,7 @@ QString parser::getcssfromdata(QString data){
 
 QString parser::getCssForTagType(QString tagType){
 
+
     QString output;
 
     QVector<QString> convertTagtoInt = {"p", "h1", "h2", "h3", "h4", "h5", "h6", "strong", "b", "cite", "address", "i"};
@@ -181,6 +183,11 @@ QString parser::getCssForTagType(QString tagType){
 //this is BAD and DUMB
 QVector<parser::tagData> parser::parseTags(QString html){
     qDebug() << "parsing tags";
+
+    //removes coments
+    html.remove(QRegularExpression("<!(.*)-->.*?|<(.*) >"));
+
+    qDebug() << "with removed comments: " << html;
 
     QVector<tagData> tags;
 

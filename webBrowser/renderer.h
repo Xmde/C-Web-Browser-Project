@@ -10,8 +10,7 @@
 class renderer : public QObject
 {
 public:
-    bool readyToLoadNewImage;
-    bool imageLoaded;
+    bool pageRendered;
     renderer();
     void renderPage(QScrollArea* displayArea, QVector<htmldata> tags, class MainProgramWindow* window, QString site);
     QByteArray getImage(QString urlBase, QString imgUrl);
