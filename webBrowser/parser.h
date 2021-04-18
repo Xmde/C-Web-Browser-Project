@@ -19,6 +19,7 @@ public:
     static QVector<tagData> addCssToTagData(QVector<tagData> tags);
     static QVector<htmldata> makeTagsGeneric(QVector<tagData> tags);
     static QVector<htmldata> parseHtml(QString html);
+    static int getFontSizeFromData(htmldata data, int defaultSize);
 };
 
 #endif // PARSER_H
