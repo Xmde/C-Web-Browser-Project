@@ -57,13 +57,36 @@ void MainProgramWindow::loadPage(QString url){
     //makes links change url
     ui->url->setText(url);
 
+    //breaks the url into the sight and the page on the sight
+    QString site = "";
+    QString sitePage = "";
+    int slashes = 0;
+    for(QChar x : url){
+        const char c = x.toLatin1();
+
+        if(c == *"/"){
+            slashes++;
+        }
+
+        if(slashes > 2){
+            sitePage.append(x);
+        }
+        else{
+            site.append(x);
+        }
+    }
+
+    if(sitePage == ""){
+        sitePage = "/";
+    }
+
     int attempts = 0;
 
     getpagedata:
 
     attempts++;
 
-    const char *urlstd = url.toUtf8();
+    const char *urlstd = site.toUtf8();
     httplib::Client cli(urlstd);
     //httplib::Client cli("http://inventobot.com");
 
@@ -75,7 +98,7 @@ void MainProgramWindow::loadPage(QString url){
 
     QString page = "<p>ERROR: PAGE COULD NOT BE LOADED</p>";
     try {
-        auto res = cli.Get("/");
+        auto res = cli.Get(sitePage.toUtf8());
 
         if(res.error() > 0){
             qDebug() << res.error();
