@@ -372,16 +372,53 @@ QVector<parser::tagData> parser::parseTags(QString html){
 
 //adds the approprate css data to the tags from the css file/tag type
 QVector<parser::tagData> parser::addCssToTagData(QVector<tagData> tags){
-    qDebug() << "IMPLIMENT TAG CSS ADDING";
+    qDebug() << "adding css to tag data";
+    QVector<tagData> output = QVector<tagData>();
 
-    return tags;
+    for(tagData t : tags){
+        //coppys old tag type and contense to new struct
+        tagData newTag = parser::tagData();
+        newTag.tagtype = t.tagtype;
+        newTag.tagContence = t.tagContence;
+
+        //gets the old data we care about to be used later
+        QString newData = t.tagData;
+        QString oldCss = getcssfromdata(newData);
+
+        qDebug() << "origonal data: " + newData;
+
+        //fixes broken css
+        oldCss.append(";");
+
+        //removes old css from tag
+        int indexOfStyle;
+        int indexOfStyleEnd;
+
+        indexOfStyle = newData.indexOf("style=\"");
+        indexOfStyleEnd = newData.indexOf("\"", indexOfStyle);
+
+        newData.remove(indexOfStyle, (indexOfStyleEnd - indexOfStyle));
+
+        qDebug() << "data with style removed: " + newData;
+
+        newData.append(" style=\"" + getCssForTagType(newTag.tagtype) + " " + oldCss + "\" ");
+
+        qDebug() << "data with improved style: " + newData;
+
+        newTag.tagData = newData;
+
+        output.append(newTag);
+    }
+
+
+    return output;
 }
 
 //makes the raw tags into the generic tags that can be rendered
 QVector<htmldata> parser::makeTagsGeneric(QVector<parser::tagData> tags){
     qDebug() << "makign tags generic";
 
-    QVector<QString> textTags = {"p", "div", "strong", "abbr", "address", "b", "bdi", "bdo", "blockquote", "caption", "cite", "del", "em", "h1", "h2", "h3", "h4", "h5", "h6", "q", "rt", "s", "small", "span", "sub", "sup", "var"};
+    QVector<QString> textTags = {"p", "div", "strong", "abbr", "address", "b", "i", "bdi", "bdo", "blockquote", "caption", "cite", "del", "em", "h1", "h2", "h3", "h4", "h5", "h6", "q", "rt", "s", "small", "span", "sub", "sup", "var"};
     QVector<htmldata> genericTags;
 
     for(struct tagData t : tags){

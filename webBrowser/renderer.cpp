@@ -56,7 +56,7 @@ void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist, c
             QPushButton* b = new QPushButton(d.getcontents());
             b->setVisible(true);
             //makes it look like a link
-            b->setStyleSheet("color:blue; border: none; text-align: left; text-decoration: underline;");
+            b->setStyleSheet(parser::getcssfromdata(d.getdata()) + " color:blue; border: none; text-align: left; text-decoration: underline;");
             //makes button load new page
             QString link = parser::getlinkfromdata(d.getdata());
             //the leakyest memmory

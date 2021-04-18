@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#define CPPHTTPLIB_OPENSSL_SUPPORT
+//#define CPPHTTPLIB_OPENSSL_SUPPORT
 #define WIN32_LEAN_AND_MEAN
 
 //#include <Windows.h>
