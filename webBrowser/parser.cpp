@@ -185,7 +185,7 @@ QVector<parser::tagData> parser::parseTags(QString html){
     qDebug() << "parsing tags";
 
     //removes coments
-    html.remove(QRegularExpression("<!(.*)-->.*?|<(.*) >"));
+    html.remove(QRegularExpression("<!-(.*)->"));
 
     qDebug() << "with removed comments: " << html;
 
