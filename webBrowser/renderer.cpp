@@ -48,6 +48,7 @@ void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist, c
             l->setMinimumWidth(760);
             l->setWordWrap(true);
             //set css data
+            l->setStyleSheet(parser::getcssfromdata(d.getdata()));
             box->addWidget(l);
             //box->addSpacerItem(new QSpacerItem(10, 2));
         }

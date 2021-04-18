@@ -11,8 +11,8 @@ struct parser::tagData{
     QString tagContence;
 
    friend std::ostream& operator<<(std::ostream &os, const struct tagData &str){
-      return os << "type: " + str.tagtype.toUtf8().toStdString() + " data: " + str.tagData.toUtf8().toStdString() + " contence: " + str.tagContence.toUtf8().toStdString() << std::endl;
-       //return os;
+      //return os << "type: " + str.tagtype.toUtf8().toStdString() + " data: " + str.tagData.toUtf8().toStdString() + " contence: " + str.tagContence.toUtf8().toStdString() << std::end;
+       return os;
    }
 
    operator QString() const {
@@ -21,19 +21,126 @@ struct parser::tagData{
 };
 
 QString parser::getlinkfromdata(QString data){
-    return "todo";
+
+    //qDebug() << data;
+
+    int indexOfHref;
+    int indexOfHrefEnd;
+    QString output;
+
+    indexOfHref = data.indexOf("href=\"")+6;
+    indexOfHrefEnd = data.indexOf("\"", indexOfHref);
+
+    //qDebug() << indexOfHref;
+    //qDebug() << indexOfHrefEnd;
+
+    for(int i = indexOfHref; i < indexOfHrefEnd; i++){
+        output.append(data.at(i));
+    }
+
+    //qDebug() << output;
+
+    return output;
 };
 
 QString parser::getsrcfromdata(QString data){
-    return "todo";
+    //qDebug() << data;
+
+    int indexOfSrc;
+    int indexOfSrcEnd;
+    QString output;
+
+    indexOfSrc = data.indexOf("src=\"")+5;
+    indexOfSrcEnd = data.indexOf("\"", indexOfSrc);
+
+    //qDebug() << indexOfHref;
+    //qDebug() << indexOfHrefEnd;
+
+    for(int i = indexOfSrc; i < indexOfSrcEnd; i++){
+        output.append(data.at(i));
+    }
+
+    qDebug() << output;
+
+    return output;
 };
 
 QString parser::getcssfromdata(QString data){
-    return "todo";
+    //qDebug() << data;
+
+    int indexOfStyle;
+    int indexOfStyleEnd;
+    QString output;
+
+    indexOfStyle = data.indexOf("style=\"")+7;
+    indexOfStyleEnd = data.indexOf("\"", indexOfStyle);
+
+    //qDebug() << indexOfHref;
+    //qDebug() << indexOfHrefEnd;
+
+    for(int i = indexOfStyle; i < indexOfStyleEnd; i++){
+        output.append(data.at(i));
+    }
+
+    qDebug() << output;
+
+    return output;
 };
 
 QString parser::getCssForTagType(QString tagType){
-    return "todo";
+
+    QString output;
+
+    QVector<QString> convertTagtoInt = {"p", "h1", "h2", "h3", "h4", "h5", "h6", "strong", "b", "cite", "address", "i"};
+
+    switch(convertTagtoInt.indexOf(tagType)){
+
+    //p Tag
+    case 0:
+        output.append("color: black;");
+        break;
+    //h1 Tag
+    case 1:
+        output.append("font-size: 2em; font-weight: bold; color: black;");
+        break;
+    //h2 Tag
+    case 2:
+        output.append("font-size: 1.5em; font-weight: bold; color: black;");
+        break;
+    //h3 Tag
+    case 3:
+        output.append("font-size: 1.17em; font-weight: bold; color: black;");
+        break;
+    //h4 Tag
+    case 4:
+        output.append("font-weight: bold; color: black;");
+        break;
+    //h5 Tag
+    case 5:
+        output.append("font-size: 0.83em; font-weight: bold; color: black;");
+        break;
+    //h6 Tab
+    case 6:
+        output.append("font-size: 0.67em; font-weight: bold; color: black;");
+        break;
+    //Bold and Strong Tag
+    case 7:
+    case 8:
+        output.append("font-weight: bold; color: black;");
+        break;
+    //Address and i and cite Tag
+    case 9:
+    case 10:
+    case 11:
+        output.append("font-style: italic; color: black;");
+        break;
+    default:
+        output.append("color: black;");
+        break;
+    }
+
+    return output;
+
 }
 
 //turns the html into a list of tags
@@ -267,7 +374,6 @@ QVector<parser::tagData> parser::parseTags(QString html){
 QVector<parser::tagData> parser::addCssToTagData(QVector<tagData> tags){
     qDebug() << "IMPLIMENT TAG CSS ADDING";
 
-    //IMPLIMENT THIS
     return tags;
 }
 
@@ -275,7 +381,7 @@ QVector<parser::tagData> parser::addCssToTagData(QVector<tagData> tags){
 QVector<htmldata> parser::makeTagsGeneric(QVector<parser::tagData> tags){
     qDebug() << "makign tags generic";
 
-    QVector<QString> textTags = {"p", "abbr", "address", "b", "bdi", "bdo", "blockquote", "caption", "cite", "del", "em", "h1", "h2", "h3", "h4", "h5", "h6", "q", "rt", "s", "small", "span", "sub", "sup", "var"};
+    QVector<QString> textTags = {"p", "div", "strong", "abbr", "address", "b", "bdi", "bdo", "blockquote", "caption", "cite", "del", "em", "h1", "h2", "h3", "h4", "h5", "h6", "q", "rt", "s", "small", "span", "sub", "sup", "var"};
     QVector<htmldata> genericTags;
 
     for(struct tagData t : tags){
