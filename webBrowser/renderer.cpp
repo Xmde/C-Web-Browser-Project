@@ -1,3 +1,5 @@
+#define CPPHTTPLIB_OPENSSL_SUPPORT
+
 #include "renderer.h"
 #include <htmldata.h>
 #include <QBoxLayout>
@@ -9,6 +11,8 @@
 #include <QFrame>
 #include <QDebug>
 #include <QSpacerItem>
+#include "filedownloader.h"
+#include "httplib.h"
 
 bool pageRendered;
 
@@ -65,7 +69,8 @@ void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist, c
             //box->addSpacerItem(new QSpacerItem(10, 2));
         }
         else if(d.gettag() == htmldata::image){
-            //figure this out
+
+
         }
         else if(d.gettag() == htmldata::other){
             //do nothing
@@ -90,4 +95,8 @@ void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist, c
     //qDebug() << "shown";
 
     pageRendered = true;
+}
+
+void renderer::getImage(QString urlBase, QString imgUrl){
+    //QUrl imageUrl(urlBase+imgUrl);
 }
