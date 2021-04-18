@@ -1,4 +1,5 @@
 #include "parser.h"
+#include <NetworkAccessManager>
 
 parser::parser()
 {
@@ -486,5 +487,14 @@ int parser::getFontSizeFromData(htmldata data, int defaultSize){
     qDebug() << output;
 
     return fout;
+}
+
+QPixmap parser::getImages(QString baseUrl, QString imgUrl){
+
+    QNetworkAccessManager *nam = new QNetworkAccessManager(this);
+        connect(nam, &QNetworkAccessManager::finished, this, &MainWindow::downloadFinished);
+        const QUrl url = QUrl("http://computer/a.jpg");
+        QNetworkRequest request(url);
+        nam->get(request);
 }
 

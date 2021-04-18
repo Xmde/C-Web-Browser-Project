@@ -97,7 +97,3 @@ void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist, c
 
     pageRendered = true;
 }
-
-void renderer::getImage(QString urlBase, QString imgUrl){
-    //QUrl imageUrl(urlBase+imgUrl);
-}

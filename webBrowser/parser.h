@@ -20,6 +20,7 @@ public:
     static QVector<htmldata> makeTagsGeneric(QVector<tagData> tags);
     static QVector<htmldata> parseHtml(QString html);
     static int getFontSizeFromData(htmldata data, int defaultSize);
+    void imageHandle(QString url);
 };
 
 #endif // PARSER_H

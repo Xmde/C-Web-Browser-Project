@@ -13,6 +13,7 @@
 #include <QVector>
 #include <QPushButton>
 #include <parser.h>
+#include <QNetworkAccessManager>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
