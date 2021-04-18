@@ -80,7 +80,15 @@ void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist, c
         else if(d.gettag() == htmldata::image){
             qDebug() << "rendering image";
             QPixmap img = QPixmap();
-            img.loadFromData(getImage("http://inventobot.com", parser::getsrcfromdata(d.getdata())));
+            QString imgUrl = parser::getsrcfromdata(d.getdata());
+            imgUrl.remove(site);
+            if(imgUrl.at(0) == *"."){
+                imgUrl.remove(0, 1);
+            }
+            if(imgUrl.at(0) == *"/"){
+                imgUrl.remove(0, 1);
+            }
+            img.loadFromData(getImage(site, imgUrl));
             QLabel* imgContaner = new QLabel();
             imgContaner->setPixmap(img);
             box->addWidget(imgContaner);
@@ -135,7 +143,7 @@ QByteArray renderer::getImage(QString urlBase, QString imgUrl){
 
      while (!isDone) {
          isDone = reply->isFinished();
-         qDebug() << "image downloading still";
+         //qDebug() << "image downloading still";
          //qDebug() << reply->error();
 
      }
