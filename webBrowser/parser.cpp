@@ -117,7 +117,7 @@ QString parser::getcssfromdata(QString data){
         output.append(data.at(i));
     }
 
-    qDebug() << output;
+    //qDebug() << output;
 
     return output;
 };
@@ -209,7 +209,7 @@ QVector<parser::tagData> parser::parseTags(QString html){
     int charsAfterTagStart = 999;
     for(QChar x : html){
         const char c = x.toLatin1();
-        qDebug() << c;
+        //qDebug() << c;
         if(c == *"\""){
             inQuotes = !inQuotes;
             if(inQuotes){
@@ -236,7 +236,7 @@ QVector<parser::tagData> parser::parseTags(QString html){
             //checks foor space
             else if(c == *" "){
                 if(charsAfterTagStart < 2){
-                    qDebug() << "tag starting was WRONG, reverting all";
+                    //qDebug() << "tag starting was WRONG, reverting all";
                     inTagType = false;
                     currentTag.removeLast();
                     tagContence.removeLast();
@@ -246,18 +246,18 @@ QVector<parser::tagData> parser::parseTags(QString html){
                 if(inTagType){
                     inTagType = false;
                     inTagData = true;
-                    qDebug() << "now reading tag data";
+                    //qDebug() << "now reading tag data";
                 }
 
                 //if wasent reading tag type add the space to the data or contence
                 else{
                     if(inTagData && !tagOver){
                         tagData.last().append(c);
-                        qDebug() << "added ' ' to data";
+                        //qDebug() << "added ' ' to data";
                     }
                     else if(inTagContence && !tagOver){
                         tagContence.last().append(c);
-                        qDebug() << "added ' ' to contens";
+                        //qDebug() << "added ' ' to contens";
                     }
                     else{
                         //do nothing
@@ -271,7 +271,7 @@ QVector<parser::tagData> parser::parseTags(QString html){
                 //qDebug() << "slash";
 
                 if(charsAfterTagStart < 2){
-                    qDebug() << "tag was ending, not starting, reverting arrays";
+                    //qDebug() << "tag was ending, not starting, reverting arrays";
                     currentTag.removeLast();
                     tagContence.removeLast();
                     tagData.removeLast();
@@ -286,11 +286,11 @@ QVector<parser::tagData> parser::parseTags(QString html){
                 //adds the tag to the data or contense if not in type
                 else if(inTagData && !tagOver){
                     tagData.last().append(c);
-                    qDebug() << "added '/' to data";
+                    //qDebug() << "added '/' to data";
                 }
                 else if(inTagContence && !tagOver){
                     tagContence.last().append(c);
-                    qDebug() << "added '/' to contens";
+                    //qDebug() << "added '/' to contens";
                 }
                 else{
                     //do nothing
@@ -350,11 +350,11 @@ QVector<parser::tagData> parser::parseTags(QString html){
                 //if not a closing for a tag add it to the data or contense
                 else{
                     if(inTagData && !tagOver){
-                        tagData.last().append(c);
+                        //tagData.last().append(c);
                         qDebug() << "added '>' to data";
                     }
                     else if(inTagContence && !tagOver){
-                        tagContence.last().append(c);
+                        //tagContence.last().append(c);
                         qDebug() << "added '>' to contens";
                     }
                     else{
@@ -368,15 +368,15 @@ QVector<parser::tagData> parser::parseTags(QString html){
             else{
                 if(inTagType && !tagOver){
                     currentTag.last().append(c);
-                    qDebug() << "added " << c << " to type";
+                    //qDebug() << "added " << c << " to type";
                 }
                 else if(inTagData && !tagOver){
                     tagData.last().append(c);
-                    qDebug() << "added " << c << " to data";
+                    //qDebug() << "added " << c << " to data";
                 }
                 else if(inTagContence && !tagOver){
                     tagContence.last().append(c);
-                    qDebug() << "added " << c << " to contens";
+                    //qDebug() << "added " << c << " to contens";
                 }
                 else{
                     //do nothing
@@ -388,15 +388,15 @@ QVector<parser::tagData> parser::parseTags(QString html){
         else{
             if(inTagType && !tagOver){
                 currentTag.last().append(c);
-                qDebug() << "added " << c << " to type while in quotes";
+                //qDebug() << "added " << c << " to type while in quotes";
             }
             else if(inTagData && !tagOver){
                 tagData.last().append(c);
-                qDebug() << "added " << c << " to data while in quotes";
+                //qDebug() << "added " << c << " to data while in quotes";
             }
             else if(inTagContence && !tagOver){
                 tagContence.last().append(c);
-                qDebug() << "added " << c << " to contens while in quotes";
+                //qDebug() << "added " << c << " to contens while in quotes";
             }
             else{
                 //do nothing
@@ -426,7 +426,7 @@ QVector<parser::tagData> parser::addCssToTagData(QVector<tagData> tags){
         QString newData = t.tagData;
         QString oldCss = getcssfromdata(newData);
 
-        qDebug() << "origonal data: " + newData;
+        //qDebug() << "origonal data: " + newData;
 
         //fixes broken css
         oldCss.append(";");
@@ -440,11 +440,11 @@ QVector<parser::tagData> parser::addCssToTagData(QVector<tagData> tags){
 
         newData.remove(indexOfStyle, (indexOfStyleEnd - indexOfStyle));
 
-        qDebug() << "data with style removed: " + newData;
+        //qDebug() << "data with style removed: " + newData;
 
         newData.append(" style=\"" + getCssForTagType(newTag.tagtype) + " " + oldCss + "\" ");
 
-        qDebug() << "data with improved style: " + newData;
+        //qDebug() << "data with improved style: " + newData;
 
         newTag.tagData = newData;
 

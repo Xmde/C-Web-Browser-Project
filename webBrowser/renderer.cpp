@@ -143,7 +143,7 @@ QByteArray renderer::getImage(QString urlBase, QString imgUrl){
      while (!isDone) {
          isDone = reply->isFinished();
          //qDebug() << "image downloading still";
-         qDebug() << reply->error();
+         //qDebug() << reply->error();
 
      }
 
