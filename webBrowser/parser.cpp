@@ -34,8 +34,25 @@ QString parser::getlinkfromdata(QString data){
     //qDebug() << indexOfHref;
     //qDebug() << indexOfHrefEnd;
 
+    bool inQuotes = false;
     for(int i = indexOfHref; i < indexOfHrefEnd; i++){
-        output.append(data.at(i));
+        QChar c = data.at(i);
+        if(c == *"\""){
+            inQuotes = !inQuotes;
+        }
+
+        if(!inQuotes){
+            if(c == *" "){
+                break;
+            }
+            else{
+                output.append(c);
+            }
+        }
+        else{
+            output.append(c);
+        }
+
     }
 
     //qDebug() << output;
@@ -56,8 +73,25 @@ QString parser::getsrcfromdata(QString data){
     //qDebug() << indexOfHref;
     //qDebug() << indexOfHrefEnd;
 
+    bool inQuotes = false;
     for(int i = indexOfSrc; i < indexOfSrcEnd; i++){
-        output.append(data.at(i));
+        QChar c = data.at(i);
+        if(c == *"\""){
+            inQuotes = !inQuotes;
+        }
+
+        if(!inQuotes){
+            if(c == *" "){
+                break;
+            }
+            else{
+                output.append(c);
+            }
+        }
+        else{
+            output.append(c);
+        }
+
     }
 
     qDebug() << output;

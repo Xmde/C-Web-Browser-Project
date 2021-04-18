@@ -13,7 +13,6 @@ LIBS += -lwsock32 -lws2_32
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    filedownloader.cpp \
     htmldata.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -21,7 +20,6 @@ SOURCES += \
     renderer.cpp
 
 HEADERS += \
-    filedownloader.h \
     htmldata.h \
     httplib.h \
     mainwindow.h \

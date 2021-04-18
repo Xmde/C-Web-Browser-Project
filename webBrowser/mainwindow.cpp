@@ -120,7 +120,7 @@ void MainProgramWindow::loadPage(QString url){
         }
     }
 
-    ui->log->append(page);
+    //ui->log->append(page);
 
     //data for testing the renderer
 //    QVector<htmldata> dummydata = QVector<htmldata>();
@@ -139,12 +139,12 @@ void MainProgramWindow::loadPage(QString url){
 //    dummydata.append(htmldata(htmldata::text, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "test"));
 
     QVector<htmldata> pageData;
-    pageData.append(htmldata(htmldata::text, "LINK: " + url + ". PAGE START:", "start"));
+    //pageData.append(htmldata(htmldata::text, "LINK: " + url + ". PAGE START:", "start"));
     pageData.append(parser::parseHtml(page));
-    pageData.append(htmldata(htmldata::text, "PAGE END", "end"));
+    //pageData.append(htmldata(htmldata::text, "PAGE END", "end"));
 
 
-    renderobj->renderPage(ui->page, pageData, this);
+    renderobj->renderPage(ui->page, pageData, this, site);
 
 
 

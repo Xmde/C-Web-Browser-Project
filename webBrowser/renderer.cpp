@@ -11,17 +11,25 @@
 #include <QFrame>
 #include <QDebug>
 #include <QSpacerItem>
-#include "filedownloader.h"
-#include "httplib.h"
+#include <QObject>
+#include <QByteArray>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QImage>
+#include <QPixmap>
+#include <QThread>
 
 bool pageRendered;
 
 renderer::renderer()
 {
     pageRendered = false;
+    renderer::readyToLoadNewImage = false;
+    renderer::imageLoaded = false;
 }
 
-void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist, class MainProgramWindow* window){
+void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist, class MainProgramWindow* window, QString site){
 
     if(pageRendered){
         //less memmory leaks?
@@ -69,7 +77,12 @@ void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist, c
             //box->addSpacerItem(new QSpacerItem(10, 2));
         }
         else if(d.gettag() == htmldata::image){
-
+            qDebug() << "rendering image";
+            QPixmap img = QPixmap();
+            img.loadFromData(getImage("http://inventobot.com", parser::getsrcfromdata(d.getdata())));
+            QLabel* imgContaner = new QLabel();
+            imgContaner->setPixmap(img);
+            box->addWidget(imgContaner);
 
         }
         else if(d.gettag() == htmldata::other){
@@ -97,6 +110,44 @@ void renderer::renderPage(QScrollArea* displayArea, QVector<htmldata> taglist, c
     pageRendered = true;
 }
 
-void renderer::getImage(QString urlBase, QString imgUrl){
-    //QUrl imageUrl(urlBase+imgUrl);
+QByteArray renderer::getImage(QString urlBase, QString imgUrl){
+
+     QNetworkAccessManager* WebCtrl = new QNetworkAccessManager;
+     qDebug() << "url: " + urlBase + "/" + imgUrl;
+     QNetworkRequest request(QUrl(urlBase + "/" + imgUrl));
+
+
+     QNetworkReply* reply = WebCtrl->get(request);
+     QThread* t = new QThread();
+     WebCtrl->moveToThread(t);
+     t->start();
+
+     //reply->ignoreSslErrors();
+
+     bool isDone = false;
+
+     //QObject::connect(WebCtrl, SIGNAL(QNetworkAccessManager::finished(QNetworkReply*)), [isDone](){qDebug() <<"done"; isDone = true;});
+
+     qDebug() << reply->error();
+
+     QWidget::connect(reply, &QNetworkReply::downloadProgress, [](qint64 r, qint64 t){qDebug() << "recived: " << r;});
+
+     while (!isDone) {
+         isDone = reply->isFinished();
+         qDebug() << "image downloading still";
+         //qDebug() << reply->error();
+
+     }
+
+     QByteArray downloadedData = reply->readAll();
+     //emit a signal
+     //reply->deleteLater();
+
+
+     //qDebug() << downloadedData;
+
+     return downloadedData;
+
 }
+
+
